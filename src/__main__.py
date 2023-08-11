@@ -1,6 +1,7 @@
 import barplot
 
 root = "home"
+
 wts_names = ["WT1", "WT2"]
 kos_names = ["KO1", "KO2"]
 
