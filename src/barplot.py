@@ -1,14 +1,25 @@
 import matplotlib.pylab as plt
 import pandas as pd
 from pathlib import Path
+import statistics
 
 def read_files(basedir:str, names: list[str]) -> list[pd.DataFrame]:
+    """read files containing in names from basedir. Files are tabular
+    without a header with extension "*.txt"
+
+    Args:
+        basedir (str): root directory
+        names (list[str]): list of file names, extension is appended
+
+    Returns:
+        list[pd.DataFrame]: a list containing `pd.DataFrame`
+    """
     print("reading files...")
     basedir = Path(basedir)
     frames = []
     for name in names:
         filename = name + ".txt"
-        df = diff_time(pd.read_csv(basedir / filename, sep="\t"))
+        df = diff_time(pd.read_csv(basedir / filename, sep="\t", header=None))
         df["name"] = name
         frames.append(df)
     return frames
@@ -22,11 +33,33 @@ def diff_time(df: pd.DataFrame) -> pd.DataFrame:
       df["length_USV"] = (df.end_time - df.start_time)
       return df
 
+def CPM(g):
+    return len(g)/5.
+
+def aggregate(frames:pd.DataFrame, op:str):
+    """make the following operations to the pd.DataFrame: mean, standard deviation,
+    number of rows, CPM (calls per minute), and the mean of "length_USV"
+
+    Args:
+        frames (pd.DataFrame): pd.DataFrame that contains the values for the operations
+        op (str): different operations
+    """
+    means = list()
+    lenframes = len(frames)
+    if op == "mean":
+        operation = statistics.mean
+    elif op == "stdev":
+        operation = statistics.stdev
+    elif op == "nrow":
+        operation = lambda df: df.shape[0]
+    elif op == "CPM":
+        operation = CPM
+    for i in range(lenframes):
+        means.append(operation(frames[i]["length_USV"]))
+    return(means)
+
 def plot_barplot():
     raise NotImplementedError("The function is under construction")
-
-def cpm(g):
-    return len(g)/5.
 
 if __name__ == "__main__":
     print("testing")
@@ -35,7 +68,7 @@ if __name__ == "__main__":
     kos = read_files(root, kosnames)
 
     group = pd.concat(kos).groupby("name")
-    cpm = group.apply(cpm)
-    print(cpm)
+    CPM = group.apply(CPM)
+    print(CPM)
 
 
