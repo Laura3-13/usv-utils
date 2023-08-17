@@ -9,7 +9,7 @@ WTS = barplot.read_files(root, wtsnames)
 KOS = barplot.read_files(root, kosnames)
 
 WTS_df = pd.DataFrame({
-    "average.lenght.usv": barplot.aggregate(WTS, "mean"),
+    "average.length.usv": barplot.aggregate(WTS, "mean"),
     "stdev.length.usv": barplot.aggregate(WTS, "stdev"),
     "total.calls": barplot.aggregate(WTS, "nrow"),
     "calls.per.minute": barplot.aggregate (WTS, "CPM")
@@ -22,8 +22,7 @@ KOS_df = pd.DataFrame({
     "calls.per.minute": barplot.aggregate(KOS, "CPM")
 })
 
-print(len(WTS))
-print(len(KOS))
-print(kosnames[0])
-print(KOS[0])
 print(WTS_df)
+print(KOS_df)
+print(f"WTS group avg = {WTS_df['average.length.usv'].astype(float).mean():.6f}")
+print(f"KOS group avg = {KOS_df['average.length.usv'].astype(float).mean():.6f}")
