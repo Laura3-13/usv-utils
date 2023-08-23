@@ -15,7 +15,8 @@ conda activate .venv
 ## install library
 
 ``` bash
-pip install -r requirements.txt
+cd # the directory of this file
+pip install '-r' requirements.txt
 ```
 
 ## Minimal usage
