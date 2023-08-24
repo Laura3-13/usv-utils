@@ -6,26 +6,15 @@ root =  "D:/laura/OneDrive - McGill University/Ph.D/IMPACT/USV files"
 kosnames = ["KO1", "KO2", "KO3", "KO4", "KO5", "KO6", "KO7", "KO8", "KO9"]
 wtsnames = ["WT1", "WT2", "WT3", "WT4", "WT5", "WT6", "WT7","WT8","WT9"]
 
-WTS = barplot.read_files(root, wtsnames)
-KOS = barplot.read_files(root, kosnames)
+kos = barplot.Summary(root, kosnames)
+KOS_df = kos.generate_summary()
+
+wts = barplot.Summary(root, wtsnames)
+WTS_df = wts.generate_summary()
 
 # Create new folder named "Phyton_files"
 path = os.path.join(root, "Phyton_files")
 os.makedirs(path, exist_ok = True)
-
-WTS_df = pd.DataFrame({
-    "average.length.usv": barplot.aggregate(WTS, "mean"),
-    "stdev.length.usv": barplot.aggregate(WTS, "stdev"),
-    "total.calls": barplot.aggregate(WTS, "nrow"),
-    "calls.per.minute": barplot.aggregate (WTS, "CPM")
-})
-
-KOS_df = pd.DataFrame({
-    "average.length.usv": barplot.aggregate(KOS, "mean"),
-    "stdev.length.usv": barplot.aggregate(KOS, "stdev"),
-    "total.calls": barplot.aggregate(KOS, "nrow"),
-    "calls.per.minute": barplot.aggregate(KOS, "CPM")
-})
 
 print(WTS_df)
 print(KOS_df)
@@ -49,5 +38,27 @@ WTvsKOsummary = pd.DataFrame({
 
 print(WTvsKO)
 print(WTvsKOsummary)
+print()
 WTvsKO_path = os.path.join(root, "Phyton_files", "WTvsKO.xlsx")
 WTvsKO.to_excel(WTvsKO_path, index = False)
+
+# Separate the WTvsKO data based on the Genotype
+WT_usv_length = WTvsKO[WTvsKO["Genotype"] == "WT"]["usv_length_mean"]
+KO_usv_length = WTvsKO[WTvsKO["Genotype"] == "KO"]["usv_length_mean"]
+WT_CPM = WTvsKO[WTvsKO["Genotype"] == "WT"]["CPM_mean"]
+KO_CPM = WTvsKO[WTvsKO["Genotype"] == "KO"]["CPM_mean"]
+
+print("T-TEST")
+t_stat, p_value, test_type = barplot.perform_ttest(WT_usv_length, KO_usv_length)
+print("USV length")
+print("Test used:", test_type)
+print("t-statistic:", t_stat)
+print("p-value:", p_value)
+print()
+
+t_stat, p_value, test_type = barplot.perform_ttest(WT_CPM, KO_CPM)
+print("CPM")
+print("Test used:", test_type)
+print("t-statistics:", t_stat)
+print("p-value:", p_value)
+print()

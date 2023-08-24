@@ -2,6 +2,23 @@ import matplotlib.pylab as plt
 import pandas as pd
 from pathlib import Path
 import statistics
+from scipy.stats import ttest_ind, levene
+
+class Summary():
+    def __init__(self, root, names) -> None:
+        self.root = root
+        self.filenames = names
+
+    def generate_summary(self) -> pd.DataFrame:
+        dir_names = read_files(self.root, self.filenames)
+        summary_df = pd.DataFrame({
+        "average.length.usv": aggregate(dir_names, "mean"),
+        "stdev.length.usv": aggregate(dir_names, "stdev"),
+        "total.calls": aggregate(dir_names, "nrow"),
+        "calls.per.minute": aggregate(dir_names, "CPM")
+        })
+
+        return summary_df
 
 def read_files(basedir:str, names: list[str]) -> list[pd.DataFrame]:
     """read files containing in names from basedir. Files are tabular
@@ -57,6 +74,24 @@ def aggregate(frames:pd.DataFrame, op:str):
     for i in range(lenframes):
         means.append(operation(frames[i]["length_USV"]))
     return(means)
+
+def perform_ttest(sample1, sample2):
+    """Perform a t-test, standard or Welch's according to Levene's test
+
+    Args:
+        sample1 (pd.series): first group/sample to compare with the t-test
+        sample2 (pd.series): second group/sample to compare with the t-test
+    """
+    # Test for equality of variances
+    stat, p_value_var = levene(sample1, sample2)
+    # If p-value is less than significance level, assume unequal variances
+    if p_value_var < 0.05:
+        t_stat, p_value = ttest_ind(sample1, sample2, equal_var=False) # Welch's t-test
+        test_type = "Welch's t-test"
+    else:
+        t_stat, p_value = ttest_ind(sample1, sample2, equal_var=True) # Standard t-test
+        test_type = "Standard t-test"
+    return(t_stat, p_value, test_type)
 
 def plot_barplot():
     raise NotImplementedError("The function is under construction")
