@@ -48,15 +48,15 @@ KO_usv_length = WTvsKO[WTvsKO["Genotype"] == "KO"]["usv_length_mean"]
 WT_CPM = WTvsKO[WTvsKO["Genotype"] == "WT"]["CPM_mean"]
 KO_CPM = WTvsKO[WTvsKO["Genotype"] == "KO"]["CPM_mean"]
 
-print("T-TEST")
-t_stat, p_value, test_type = barplot.perform_ttest(WT_usv_length, KO_usv_length)
+print("\033[1;4mSTATISTICS\033[0m")
+t_stat, p_value, test_type = barplot.perform_statistics(WT_usv_length, KO_usv_length)
 print("USV length")
 print("Test used:", test_type)
 print("t-statistic:", t_stat)
 print("p-value:", p_value)
 print()
 
-t_stat, p_value, test_type = barplot.perform_ttest(WT_CPM, KO_CPM)
+t_stat, p_value, test_type = barplot.perform_statistics(WT_CPM, KO_CPM)
 print("CPM")
 print("Test used:", test_type)
 print("t-statistics:", t_stat)

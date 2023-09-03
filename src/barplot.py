@@ -2,7 +2,7 @@ import matplotlib.pylab as plt
 import pandas as pd
 from pathlib import Path
 import statistics
-from scipy.stats import ttest_ind, levene
+from scipy.stats import ttest_ind, levene, shapiro, mannwhitneyu
 
 def read_files(basedir:str, names: list[str]) -> list[pd.DataFrame]:
     """read files containing in names from basedir. Files are tabular
@@ -91,22 +91,34 @@ class Summary():
 
         return summary_df
 
-def perform_ttest(sample1, sample2):
-    """Perform a t-test, standard or Welch's according to Levene's test
+def perform_statistics(sample1, sample2):
+    """Perform a test of normality (Spahiro-Wilk test), and then a t-test (standard or Welch's, according to Levene's test), or a Mann-Whitney U test
 
     Args:
         sample1 (pd.series): first group/sample to compare with the t-test
         sample2 (pd.series): second group/sample to compare with the t-test
     """
-    # Test for equality of variances
-    stat, p_value_var = levene(sample1, sample2)
-    # If p-value is less than significance level, assume unequal variances
-    if p_value_var < 0.05:
-        t_stat, p_value = ttest_ind(sample1, sample2, equal_var=False) # Welch's t-test
-        test_type = "Welch's t-test"
+    # Test for normality
+    shapiro_sample1 = shapiro(sample1)
+    shapiro_sample2 = shapiro(sample2)
+    alpha = 0.05 # Significance level
+    if shapiro_sample1.pvalue < alpha or shapiro_sample2.pvalue < alpha:
+        # If either group is not normally distributed, perform Mann-Whitney U test
+        result = mannwhitneyu(sample1, sample2)
+        t_stat = result.statistic
+        p_value = result.pvalue
+        test_type = "Mann-Whitney U test"
     else:
-        t_stat, p_value = ttest_ind(sample1, sample2, equal_var=True) # Standard t-test
-        test_type = "Standard t-test"
+        # If both groups are normally distributed, use T-test or Welch's test
+        # Test for equality of variances
+        stat, p_value_var = levene(sample1, sample2)
+        # If p-value is less than significance level, assume unequal variances
+        if p_value_var < 0.05:
+            t_stat, p_value = ttest_ind(sample1, sample2, equal_var=False) # Welch's t-test
+            test_type = "Welch's t-test"
+        else:
+            t_stat, p_value = ttest_ind(sample1, sample2, equal_var=True) # Standard t-test
+            test_type = "Standard t-test"
     return(t_stat, p_value, test_type)
 
 def plot_barplot():
