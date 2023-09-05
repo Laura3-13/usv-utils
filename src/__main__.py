@@ -39,6 +39,7 @@ WTvsKOsummary = pd.DataFrame({
 print(WTvsKO)
 print(WTvsKOsummary)
 print()
+# Save WTvsKO data in an excel file
 WTvsKO_path = os.path.join(root, "Phyton_files", "WTvsKO.xlsx")
 WTvsKO.to_excel(WTvsKO_path, index = False)
 
@@ -62,3 +63,19 @@ print("Test used:", test_type)
 print("t-statistics:", t_stat)
 print("p-value:", p_value)
 print()
+
+# Save statistics as text files
+usv_length_statistics_path = os.path.join(root, "Phyton_files", "USV_length_statistics.txt")
+cpm_statistics_path = os.path.join(root, "Phyton_files","CPM_statistics.txt")
+
+with open(usv_length_statistics_path, "w") as f:
+    f.write(f"USV length\n")
+    f.write(f"Test used: {test_type}\n")
+    f.write(f"t-statistic: {t_stat}\n")
+    f.write(f"p-value: {p_value}\n")
+
+with open(cpm_statistics_path, "w") as f:
+    f.write(f"CPM\n")
+    f.write(f"Test used: {test_type}\n")
+    f.write(f"t-statistics: {t_stat}\n")
+    f.write(f"p-value: {p_value}\n")
