@@ -1,4 +1,11 @@
-.venv
-.vscode
+# Byte-compiled / optimized / DLL files
 __pycache__
+
+# Virtual environment
+.venv
+
+# Visual Studio Code settings
+.vscode
+
+# Python egg-info directories
 *.egg-info
