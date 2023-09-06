@@ -9,3 +9,6 @@ __pycache__
 
 # Python egg-info directories
 *.egg-info
+
+# Phyton files
+trials.py

@@ -5,3 +5,4 @@ statistics
 openpyxl
 scipy
 os
+seaborn

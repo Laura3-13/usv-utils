@@ -1,6 +1,7 @@
 import barplot
 import pandas as pd
 import os
+import matplotlib.pylab as plt
 
 root =  "D:/laura/OneDrive - McGill University/Ph.D/IMPACT/USV files"
 kosnames = ["KO1", "KO2", "KO3", "KO4", "KO5", "KO6", "KO7", "KO8", "KO9"]
@@ -12,14 +13,17 @@ KOS_df = kos.generate_summary()
 wts = barplot.Summary(root, wtsnames)
 WTS_df = wts.generate_summary()
 
-# Create new folder named "Phyton_files"
-path = os.path.join(root, "Phyton_files")
+# Create new folder named "Python_files"
+path = os.path.join(root, "Python_files")
 os.makedirs(path, exist_ok = True)
 
-print(WTS_df)
-print(KOS_df)
-print(f"WTS group avg = {WTS_df['average.length.usv'].astype(float).mean():.6f}")
-print(f"KOS group avg = {KOS_df['average.length.usv'].astype(float).mean():.6f}")
+print("\033[1;4mWTS_df\033[0m\n", WTS_df)
+print()
+print("\033[1;4mKOS_df\033[0m\n", KOS_df)
+print()
+print(f"\033[1;4mWTS group avg\033[0m = {WTS_df['average.length.usv'].astype(float).mean():.6f}")
+print(f"\033[1;4mKOS group avg\033[0m = {KOS_df['average.length.usv'].astype(float).mean():.6f}")
+print()
 
 WTvsKO = pd.DataFrame({
     "Genotype": ["WT"]*len(WTS_df["average.length.usv"]) + ["KO"]*len(KOS_df["average.length.usv"]),
@@ -36,11 +40,12 @@ WTvsKOsummary = pd.DataFrame({
     "CPM_sem": [WTS_df['calls.per.minute'].astype(float).sem(), KOS_df['calls.per.minute'].astype(float).sem()]
 })
 
-print(WTvsKO)
-print(WTvsKOsummary)
+print("\033[1;4mWTSvsKO\033[0m\n", WTvsKO)
+print()
+print("\033[1;4mWTSvsKO summary\033[0m\n", WTvsKOsummary)
 print()
 # Save WTvsKO data in an excel file
-WTvsKO_path = os.path.join(root, "Phyton_files", "WTvsKO.xlsx")
+WTvsKO_path = os.path.join(path, "WTvsKO.xlsx")
 WTvsKO.to_excel(WTvsKO_path, index = False)
 
 # Separate the WTvsKO data based on the Genotype
@@ -65,8 +70,8 @@ print("p-value:", p_value)
 print()
 
 # Save statistics as text files
-usv_length_statistics_path = os.path.join(root, "Phyton_files", "USV_length_statistics.txt")
-cpm_statistics_path = os.path.join(root, "Phyton_files","CPM_statistics.txt")
+usv_length_statistics_path = os.path.join(path, "USV_length_statistics.txt")
+CPM_statistics_path = os.path.join(path,"CPM_statistics.txt")
 
 with open(usv_length_statistics_path, "w") as f:
     f.write(f"USV length\n")
@@ -74,8 +79,14 @@ with open(usv_length_statistics_path, "w") as f:
     f.write(f"t-statistic: {t_stat}\n")
     f.write(f"p-value: {p_value}\n")
 
-with open(cpm_statistics_path, "w") as f:
+with open(CPM_statistics_path, "w") as f:
     f.write(f"CPM\n")
     f.write(f"Test used: {test_type}\n")
     f.write(f"t-statistics: {t_stat}\n")
     f.write(f"p-value: {p_value}\n")
+
+# Create barplots
+usv_length_plot_path = os.path.join(path, "USV_length.png")
+usv_length_plot = barplot.plot_barplot(WTvsKO, WTvsKOsummary["Genotype"], WTvsKOsummary["usv_length_mean"], WTvsKOsummary["usv_length_sem"], WTvsKO["Genotype"], WTvsKO["usv_length_mean"], usv_length_plot_path, "USV length (s)")
+CPM_plot_path = os.path.join(path, "CPM.png")
+CPM_plot = barplot.plot_barplot(WTvsKO, WTvsKOsummary["Genotype"], WTvsKOsummary["CPM_mean"], WTvsKOsummary["CPM_sem"], WTvsKO["Genotype"], WTvsKO["CPM_mean"], CPM_plot_path, "Calls per minute")

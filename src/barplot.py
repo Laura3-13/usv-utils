@@ -1,4 +1,5 @@
 import matplotlib.pylab as plt
+import seaborn as sns
 import pandas as pd
 from pathlib import Path
 import statistics
@@ -121,9 +122,48 @@ def perform_statistics(sample1, sample2):
             test_type = "Standard t-test"
     return(t_stat, p_value, test_type)
 
-def plot_barplot():
-    raise NotImplementedError("The function is under construction")
+def plot_barplot(data, x_axis, y_axis, sem_values, x_axis_2, individual_points, save_path, y_label):
+    """Create a barplot with error bars and individual points, and save it as a file
 
+    Args:
+        data (pd.DataFrame): data frame of the data for the graph
+        x_axis (pd.Series): groups for the x axis for the bars
+        y_axis (pd.Series): length of the y axis (mean)
+        sem_values (pd.Series): sem of the y axis for error bars
+        x_axis_2 (pd.Series): groups of the x axis for the individual points
+        individual_points (pd.Series): individual values
+        save_path (str): path directory (where to save the graphs)
+        y_label (str): name for the y axis
+    """
+    fig, ax = plt.subplots()
+    ax = sns.barplot(x = x_axis, y = y_axis, data = data, palette = "Blues", errorbar = None)
+    # Manually adding error bars:
+    for i, sem in enumerate(sem_values):
+        ax.errorbar(i, y_axis.iloc[i], yerr = sem, fmt = "none", capsize = 5, color = "black")
+    # Add indiviual data points
+    for i, category in enumerate(x_axis.unique()): # Assuming x_axis is a column in data with unique categories
+        y_values = individual_points[x_axis_2 == category]
+        x_values = [i]*len(y_values) # x-axis position repeated for all individual points
+        ax.scatter(x_values, y_values, color = "black")
+    # Show the plot in its original size
+    original_size = fig.get_size_inches()
+    plt.draw()
+    plt.pause(0.001) # Pause for a moment to allow the draw to take place
+    input("Press any key to continue...")
+    # Setting figure size and font sizes
+    fig.set_size_inches(20,12)
+    ax.tick_params(axis = 'x', labelsize = 14)  # Increase x-axis tick labels size
+    ax.tick_params(axis = 'y', labelsize = 14)  # Increase y-axis tick labels size
+    ax.set_xlabel(x_axis.name, fontsize = 16)  # Increase x-axis label size
+    ax.set_ylabel(y_axis.name, fontsize = 16, labelpad = 20)  # Increase y-axis label size
+    # Set title and x and y axis labels
+    ax.set_xlabel("Genotype")
+    ax.set_ylabel(y_label)
+    # Save the plot
+    fig.savefig(save_path)
+    # Reset to original size
+    fig.set_size_inches(original_size)
+    
 if __name__ == "__main__":
     print("testing")
     root =  "D:/laura/OneDrive - McGill University/Ph.D/IMPACT/USV files"
