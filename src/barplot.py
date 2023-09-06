@@ -1,5 +1,6 @@
 import matplotlib.pylab as plt
 import seaborn as sns
+import numpy as np
 import pandas as pd
 from pathlib import Path
 import statistics
@@ -17,6 +18,7 @@ def read_files(basedir:str, names: list[str]) -> list[pd.DataFrame]:
         list[pd.DataFrame]: a list containing `pd.DataFrame`
     """
     print("reading files...")
+    print()
     basedir = Path(basedir)
     frames = []
     for name in names:
@@ -143,26 +145,15 @@ def plot_barplot(data, x_axis, y_axis, sem_values, x_axis_2, individual_points, 
     # Add indiviual data points
     for i, category in enumerate(x_axis.unique()): # Assuming x_axis is a column in data with unique categories
         y_values = individual_points[x_axis_2 == category]
-        x_values = [i]*len(y_values) # x-axis position repeated for all individual points
+        x_values = np.random.normal(loc = i, scale = 0.1, size = (len(y_values))) # random jitter (0.1) for all individual points (not spread on a straight line)
         ax.scatter(x_values, y_values, color = "black")
-    # Show the plot in its original size
-    original_size = fig.get_size_inches()
-    plt.draw()
-    plt.pause(0.001) # Pause for a moment to allow the draw to take place
-    input("Press any key to continue...")
-    # Setting figure size and font sizes
-    fig.set_size_inches(20,12)
-    ax.tick_params(axis = 'x', labelsize = 14)  # Increase x-axis tick labels size
-    ax.tick_params(axis = 'y', labelsize = 14)  # Increase y-axis tick labels size
-    ax.set_xlabel(x_axis.name, fontsize = 16)  # Increase x-axis label size
-    ax.set_ylabel(y_axis.name, fontsize = 16, labelpad = 20)  # Increase y-axis label size
     # Set title and x and y axis labels
     ax.set_xlabel("Genotype")
     ax.set_ylabel(y_label)
-    # Save the plot
-    fig.savefig(save_path)
-    # Reset to original size
-    fig.set_size_inches(original_size)
+    # Show and save the plot
+    plt.show()
+    print("saving graph...")
+    fig.savefig(save_path, dpi=300)
     
 if __name__ == "__main__":
     print("testing")

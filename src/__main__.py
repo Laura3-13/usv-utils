@@ -46,6 +46,8 @@ print("\033[1;4mWTSvsKO summary\033[0m\n", WTvsKOsummary)
 print()
 # Save WTvsKO data in an excel file
 WTvsKO_path = os.path.join(path, "WTvsKO.xlsx")
+print("saving WTvsKO data...")
+print()
 WTvsKO.to_excel(WTvsKO_path, index = False)
 
 # Separate the WTvsKO data based on the Genotype
@@ -70,6 +72,8 @@ print("p-value:", p_value)
 print()
 
 # Save statistics as text files
+print("saving statistics...")
+print()
 usv_length_statistics_path = os.path.join(path, "USV_length_statistics.txt")
 CPM_statistics_path = os.path.join(path,"CPM_statistics.txt")
 
