@@ -16,8 +16,9 @@ WTS_df = wts.create()
 barplot.Summary.print(WTS_df, "WTS_df")
 barplot.Summary.print(KOS_df, "KOS_df")
 
-WTvsKO = barplot.Join_summary.group_data(WTS_df, KOS_df, "WT", "KO")
-WTvsKOsummary = barplot.Join_summary.calculate_mean_by_group(WTS_df, KOS_df, "WT", "KO")
+WT_KO = barplot.Join_summary()
+WTvsKO = WT_KO.group_data(WTS_df, KOS_df, "WT", "KO")
+WTvsKOsummary = WT_KO.calculate_mean_by_group(WTS_df, KOS_df, "WT", "KO")
 
 # Separate the WTvsKO data based on the Genotype
 WT_usv_length = WTvsKO[WTvsKO["Genotype"] == "WT"]["usv_length_mean"]
