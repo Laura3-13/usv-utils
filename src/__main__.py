@@ -2,10 +2,17 @@ import data_workflow
 import statistical_analysis
 import plotting
 import os
+import glob
 
 root =  "D:/laura/OneDrive - McGill University/Ph.D/IMPACT/USV files"
-kosnames = ["KO1", "KO2", "KO3", "KO4", "KO5", "KO6", "KO7", "KO8", "KO9"]
-wtsnames = ["WT1", "WT2", "WT3", "WT4", "WT5", "WT6", "WT7","WT8","WT9"]
+
+def get_file_names(prefix): # to avoid writting the name of every single file
+    pattern = os.path.join(root, prefix + "*.txt")
+    files = glob.glob(pattern)
+    return [os.path.splitext(os.path.basename(f))[0] for f in files if os.path.splitext(os.path.basename(f))[0].replace(prefix, "").isdigit()]
+
+kosnames = get_file_names("KO")
+wtsnames = get_file_names("WT")
 
 kos = data_workflow.Summary(root, kosnames)
 KOS_df = kos.create()
