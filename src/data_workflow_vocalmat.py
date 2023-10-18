@@ -33,18 +33,6 @@ class Summary():
             df["name"] = name
             frames.append(df)
         return frames
-    
-    def __select_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """change the index to "start_time" and "end_time" of the USV, and calculate the USV lenght using these two values
-
-        Args:
-            df (pd.DataFrame): the 'pd.DataFrame' of the original files
-
-        Returns:
-            pd.DataFrame: with a corrected index and the addition of the USV length variable
-        """
-        df = df[df["Class"] != "noise_dist"]
-        return df
 
     @staticmethod
     def CPM(g: list):
@@ -98,7 +86,6 @@ class Summary():
             pd.DataFrame: DataFrame with the columns average lenght USV, sem length USV, total calls, and CPM
         """
         dir_names = self.__read_files(self.root, self.filenames)
-        print(dir_names[0])
         summary_df = pd.DataFrame({
         "average.length.usv": self.__aggregate(dir_names, "mean"),
         "sem.length.usv": self.__aggregate(dir_names, "sem"),

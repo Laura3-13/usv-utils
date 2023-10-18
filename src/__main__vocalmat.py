@@ -4,7 +4,7 @@ import plotting
 import utils
 import os
 
-root =  "D:/laura/OneDrive - McGill University/Ph.D/Shank3/Shank3 New Tests/USV/USV adult females and males/USV females excel files"
+root =  "D:/laura/OneDrive - McGill University/Ph.D/Shank3/Shank3 New Tests/USV/USV adults OCT.2023/USV females excel files"
 kosnames = utils.get_excel_file_names(root, "KO")
 wtsnames = utils.get_excel_file_names(root, "WT")
 

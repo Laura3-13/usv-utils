@@ -5,7 +5,7 @@ from scipy.stats import ttest_ind, levene, shapiro, mannwhitneyu
 class Statistics():
     def __init__(self, root:str) -> None:
         self.root = root
-        self.path = os.path.join(self.root, "Phyton_files")
+        self.path = os.path.join(self.root, "Python_files")
         os.makedirs(self.path, exist_ok = True)
         self.t_stat = None
         self.p_value = None
