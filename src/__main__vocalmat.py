@@ -20,6 +20,9 @@ data_workflow_vocalmat.Summary.print(KOS_df, "KOS_df")
 WT_KO = data_workflow_vocalmat.Join_summary()
 WTvsKO = WT_KO.group_data(WTS_df, KOS_df, "WT", "KO")
 WTvsKOsummary = WT_KO.calculate_mean_by_group(WTS_df, KOS_df, "WT", "KO")
+print("saving WTvsKO file...")
+WTvsKO_path = os.path.join(root, "Python_files", "WTvsKO.xlsx")
+WTvsKO.to_excel(WTvsKO_path)
 
 # Separate the WTvsKO data based on the Genotype
 WT_usv_length = WTvsKO[WTvsKO["Genotype"] == "WT"]["usv_length_mean"]
