@@ -26,5 +26,3 @@ import barplot
 
 dfs = barplot.read_files("/root", ["name1", "name2"])
 ```
-
-

@@ -4,6 +4,5 @@ pathlib
 statistics
 openpyxl
 scipy
-os
 seaborn
 numpy
