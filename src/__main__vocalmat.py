@@ -4,8 +4,8 @@ import plotting
 import utils
 import os
 
-root =  "/mnt/c/Users/laura/OneDrive - McGill University/Ph.D/Shank3/Shank3 New Tests/USV/USV adult males 08.JAN.2024//metformin/USV excel files"
-kosnames = utils.get_excel_file_names(root, "KO")
+root =  "/mnt/c/Users/laura/OneDrive - McGill University/Ph.D/Fmr1 metformin paper/Behaviour/USV Fmr1 - 3 weeks old/Fmr1 USV excel files"
+kosnames = utils.get_excel_file_names(root, "Fmr1KO")
 wtsnames = utils.get_excel_file_names(root, "WT")
 
 kos = data_workflow_vocalmat.Summary(root, kosnames)
@@ -34,13 +34,15 @@ KO_CPM = WTvsKO[WTvsKO["Genotype"] == "KO"]["CPM_mean"]
 usv_length_stats = statistical_analysis.Statistics(root)
 usv_length_stats.calculate("USV length", WT_usv_length, KO_usv_length)
 usv_length_stats.save("USV_length_statistics", "USV length")
+usv_length_stats_results = usv_length_stats.get_results()
 # For CPM
 CPM_stats = statistical_analysis.Statistics(root)
 CPM_stats.calculate("CPM", WT_CPM, KO_CPM)
 CPM_stats.save("CPM_statistics", "CPM")
+CPM_stats_results = CPM_stats.get_results()
 
 # Create barplots
 usv_length_plot_path = os.path.join(root, "Python_files", "USV_length.png")
-usv_length_plot = plotting.plot_barplot(WTvsKO, WTvsKOsummary["Genotype"], WTvsKOsummary["usv_length_mean"], WTvsKOsummary["usv_length_sem"], WTvsKO["Genotype"], WTvsKO["usv_length_mean"], "USV length (s)", usv_length_plot_path)
+usv_length_plot = plotting.plot_barplot(WTvsKO, WTvsKOsummary["Genotype"], WTvsKOsummary["usv_length_mean"], WTvsKOsummary["usv_length_sem"], WTvsKO["Genotype"], WTvsKO["usv_length_mean"], "USV length (s)", usv_length_plot_path, usv_length_stats_results)
 CPM_plot_path = os.path.join(root, "Python_files", "CPM.png")
-CPM_plot = plotting.plot_barplot(WTvsKO, WTvsKOsummary["Genotype"], WTvsKOsummary["CPM_mean"], WTvsKOsummary["CPM_sem"], WTvsKO["Genotype"], WTvsKO["CPM_mean"], "Calls per minute", CPM_plot_path)
+CPM_plot = plotting.plot_barplot(WTvsKO, WTvsKOsummary["Genotype"], WTvsKOsummary["CPM_mean"], WTvsKOsummary["CPM_sem"], WTvsKO["Genotype"], WTvsKO["CPM_mean"], "Calls per minute", CPM_plot_path, CPM_stats_results)

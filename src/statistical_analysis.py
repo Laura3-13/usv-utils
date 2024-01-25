@@ -61,3 +61,6 @@ class Statistics():
             f.write(f"Test used: {self.test_type}\n")
             f.write(f"t-statistic: {self.t_stat}\n")
             f.write(f"p-value: {self.p_value}\n")
+    
+    def get_results(self):
+        return {"p_value": self.p_value, "test_type": self.test_type}

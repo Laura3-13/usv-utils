@@ -44,6 +44,8 @@ class Summary():
         Returns:
             float: a decimal number
         """
+        if len(g) == 0:
+            return 0.0
         return len(g)/5.
     
     @staticmethod
@@ -63,11 +65,15 @@ class Summary():
         lenframes = len(frames)
         for i in range(lenframes):
             duration_data = frames[i]["Duration"]
-            if len(duration_data) <2:
+            if duration_data.empty or duration_data.isna().all():
+                # If the duration data is empty or all values are NaN, set the result to 0
+                results.append(0)
+            elif len(duration_data) <2:
                 if op == "sem":
                     results.append(float("NaN")) # Handle sem with insufficient data by returning NaN
-                elif op == "mean" or "CPM" and len(duration_data) == 1:
-                    results.append(duration_data.iloc[0]) # Handle the case with only one value, return that value for "mean"
+                elif op == "mean" or "CPM":
+                    # Handle the case with only one value or no value, return that value for "mean" or 0 for "CPM"
+                    results.append(duration_data.iloc[0] if len(duration_data) == 1 else 0)
                 else:
                     results.append(float("NaN")) # Handle cases with insufficient data for other operations by returning NaN
             else:
