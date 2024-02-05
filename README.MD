@@ -2,20 +2,23 @@
 
 ## conda create environment
 
+```bash
+cd # "the directory of the environment"
+```
+
 ``` bash
-conda create --prefix .venv python=3.10
+conda create -n neuromatch python=3.10
 ```
 
 ## activate environment
 
 ``` bash
-conda activate .venv
+conda activate neuromatch
 ```
 
 ## install library
 
 ``` bash
-cd # the directory of this file
 pip install '-r' requirements.txt
 ```
 
