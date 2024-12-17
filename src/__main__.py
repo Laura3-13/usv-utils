@@ -4,7 +4,7 @@ import plotting
 import utils
 import os
 
-# Get your usv files from your path of choice
+# Get your USV files from your path of choice
 root =  "INTRODUCE YOUR PATH HERE"
 kosnames = utils.get_file_names(root, "KO")
 wtsnames = utils.get_file_names(root, "WT")
