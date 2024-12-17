@@ -4,7 +4,8 @@ import plotting
 import utils
 import os
 
-root =  "/mnt/c/Users/laura/OneDrive - McGill University/Ph.D/Shank3/Shank3 New Tests/USV/USV Shank3 adult males October/USV males excel files"
+# Get your usv files from your path of choice
+root =  "INTRODUCE YOUR PATH HERE"
 kosnames = utils.get_file_names(root, "KO")
 wtsnames = utils.get_file_names(root, "WT")
 
