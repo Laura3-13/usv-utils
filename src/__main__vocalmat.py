@@ -4,9 +4,9 @@ import plotting
 import utils
 import os
 
-root =  "/mnt/c/Users/laura/OneDrive - McGill University/Ph.D/Fmr1 metformin paper/Behaviour/USV Fmr1 - 3 weeks old/Fmr1 USV excel files"
-kosnames = utils.get_excel_file_names(root, "Fmr1KO")
-wtsnames = utils.get_excel_file_names(root, "WT")
+root =  "/mnt/c/Users/laura/OneDrive - McGill University/Ph.D/Fmr1 metformin paper/Behaviour/USV Fmr1 - 3 weeks old - 29 February 2024/Fmr1 met USV excel files"
+kosnames = utils.get_excel_file_names(root, "Fmr1KOm")
+wtsnames = utils.get_excel_file_names(root, "WTm")
 
 kos = data_workflow_vocalmat.Summary(root, kosnames)
 KOS_df = kos.create()

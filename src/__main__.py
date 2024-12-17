@@ -4,7 +4,7 @@ import plotting
 import utils
 import os
 
-root =  "D:/laura/OneDrive - McGill University/Ph.D/IMPACT/USV files"
+root =  "/mnt/c/Users/laura/OneDrive - McGill University/Ph.D/Shank3/Shank3 New Tests/USV/USV Shank3 adult males October/USV males excel files"
 kosnames = utils.get_file_names(root, "KO")
 wtsnames = utils.get_file_names(root, "WT")
 
@@ -20,6 +20,9 @@ data_workflow.Summary.print(KOS_df, "KOS_df")
 WT_KO = data_workflow.Join_summary()
 WTvsKO = WT_KO.group_data(WTS_df, KOS_df, "WT", "KO")
 WTvsKOsummary = WT_KO.calculate_mean_by_group(WTS_df, KOS_df, "WT", "KO")
+print("saving WTvsKO file...")
+WTvsKO_path = os.path.join(root, "Python_files", "WTvsKO.xlsx")
+WTvsKO.to_excel(WTvsKO_path)
 
 # Separate the WTvsKO data based on the Genotype
 WT_usv_length = WTvsKO[WTvsKO["Genotype"] == "WT"]["usv_length_mean"]
@@ -31,10 +34,12 @@ KO_CPM = WTvsKO[WTvsKO["Genotype"] == "KO"]["CPM_mean"]
 usv_length_stats = statistical_analysis.Statistics(root)
 usv_length_stats.calculate("USV length", WT_usv_length, KO_usv_length)
 usv_length_stats.save("USV_length_statistics", "USV length")
+usv_length_stats_results = usv_length_stats.get_results()
 # For CPM
 CPM_stats = statistical_analysis.Statistics(root)
 CPM_stats.calculate("CPM", WT_CPM, KO_CPM)
 CPM_stats.save("CPM_statistics", "CPM")
+CPM_stats_results = CPM_stats.get_results()
 
 # Create barplots
 usv_length_plot_path = os.path.join(root, "Python_files", "USV_length.png")

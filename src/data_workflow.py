@@ -2,6 +2,8 @@ import pandas as pd
 import os
 from pathlib import Path
 import statistics
+import math
+import scipy.stats
 
 class Summary():
     def __init__(self, root, names) -> None:
@@ -55,7 +57,14 @@ class Summary():
         Returns:
             float: a decimal number
         """
+        if len(g) == 0:
+            return 0.0
         return len(g)/5.
+    
+    @staticmethod
+    def filter_nan_and_calculate_sem(data):
+        filtered_data = [x for x in data if not math.isnan(x)]
+        return scipy.stats.sem(filtered_data)
 
     def __aggregate(self, frames:pd.DataFrame, op:str):
         """perform the following operations to the pd.DataFrame: mean, standard deviation,
@@ -65,32 +74,41 @@ class Summary():
             frames (pd.DataFrame): pd.DataFrame that contains the values for the operations
             op (str): different operations
         """
-        means = list()
+        results = []
         lenframes = len(frames)
-        if op == "mean":
-            operation = statistics.mean
-        elif op == "stdev":
-            operation = statistics.stdev
-        elif op == "nrow":
-            operation = lambda df: df.shape[0]
-        elif op == "CPM":
-            operation = Summary.CPM
         for i in range(lenframes):
-            means.append(operation(frames[i]["length_USV"]))
-        return(means)
+            duration_data = frames[i]["length_USV"]
+            if duration_data.empty or duration_data.isna().all():
+                # If the duration data is empty or all values are NaN, set the result to 0
+                results.append(0)
+            elif len(duration_data) <2:
+                if op == "sem":
+                    results.append(float("NaN")) # Handle sem with insufficient data by returning NaN
+                elif op == "mean" or "CPM":
+                    # Handle the case with only one value or no value, return that value for "mean" or 0 for "CPM"
+                    results.append(duration_data.iloc[0] if len(duration_data) == 1 else 0)
+                else:
+                    results.append(float("NaN")) # Handle cases with insufficient data for other operations by returning NaN
+            else:
+                if op == "mean":
+                    results.append(statistics.mean(duration_data))
+                elif op == "sem":
+                    results.append(Summary.filter_nan_and_calculate_sem(duration_data)) # Use the filter_nan_and_calculate_sem static method
+                elif op == "CPM":
+                    results.append(Summary.CPM(duration_data))
+        return(results)
 
 
     def create(self) -> pd.DataFrame:
-        """Generate a summary of the data sets with 4 columns (average lenght USV, stdev length USV, total calls, and CPM)
+        """Generate a summary of the data sets with 4 columns (average lenght USV, sem length USV, total calls, and CPM)
 
         Returns:
-            pd.DataFrame: DataFrame with the columns average lenght USV, stdev length USV, total calls, and CPM
+            pd.DataFrame: DataFrame with the columns average lenght USV, sem length USV, total calls, and CPM
         """
         dir_names = self.__read_files(self.root, self.filenames)
         summary_df = pd.DataFrame({
         "average.length.usv": self.__aggregate(dir_names, "mean"),
-        "stdev.length.usv": self.__aggregate(dir_names, "stdev"),
-        "total.calls": self.__aggregate(dir_names, "nrow"),
+        "sem.length.usv": self.__aggregate(dir_names, "sem"),
         "calls.per.minute": self.__aggregate(dir_names, "CPM")
         })
 
@@ -119,7 +137,7 @@ class Join_summary():
         df = pd.DataFrame({
         "Genotype": [name1]*len(group1["average.length.usv"]) + [name2]*len(group2["average.length.usv"]),
         "usv_length_mean": group1["average.length.usv"].astype(float).tolist() + group2["average.length.usv"].astype(float).tolist(),
-        "usv_length_sem": group1["stdev.length.usv"].astype(float).tolist() + group2["stdev.length.usv"].astype(float).tolist(),
+        "usv_length_sem": group1["sem.length.usv"].astype(float).tolist() + group2["sem.length.usv"].astype(float).tolist(),
         "CPM_mean": group1["calls.per.minute"].astype(float).tolist() + group2["calls.per.minute"].astype(float).tolist()
         })
         print("\033[1;4mWTSvsKO\033[0m\n", df)
