@@ -6,8 +6,10 @@ import os
 
 # Get your USV files from your path of choice
 root =  "INTRODUCE YOUR PATH HERE"
-kosnames = utils.get_file_names(root, "KO")
-wtsnames = utils.get_file_names(root, "WT")
+
+# Change group names here if needed
+kosnames = utils.get_file_names(root, "KO") # Replace "KO" with your group name
+wtsnames = utils.get_file_names(root, "WT") # Replace "WT" with your group name
 
 kos = data_workflow.Summary(root, kosnames)
 KOS_df = kos.create()

@@ -77,18 +77,64 @@ pip install '-r' requirements.txt
 
 
 ## 📦 **How to Use**
-### **1. Add Your File Path in `__main__.py`**
-Open the `__main__.py` file and change the variable `root` to point to your data folder:
+### **1. Organize Your Data Files**
+The script is design to compare **two groups**. By default, the groups are:
+- **WT** (Wild-type)
+- **KO** (Knockout)
+
+However, you can replace **WT** and **KO** with other group names (e.g., `GroupA` and `GroupB`), as long as the files follow this structure:
+- Each group name must be consistent and followed by **numbers**.
+
+### **File Naming Rules**
+Your files must follow this naming convention:
+- `GroupName1.txt`, `GroupName2.txt`...
+
+**Example:**
+
+- For **WT** and **KO**:
+```bash
+WT1.txt, WT2.txt, WT3.txt, KO1.txt, KO2.txt, KO3.txt
+```
+- For other groups, such as **GroupA** and **GroupB**:
+```bash
+GroupA1.txt, GroupA2.txt, GroupA3.txt, GroupB1.txt, GroupB2.txt, GroupB3.txt, 
+```
+Ensure all **USV text files** are stored in a single folder.
+
+### **2. Add Your File Path in `__main__.py`**
+Open the `__main__.py` file and change the variable `root` to point to your folder containing the USV files:
 ```phyton
 # Get your USV files from your path of choice
 root = "INTRODUCE YOUR PATH HERE"
-```
 
-### **2. Run the Main Script**
+# Change group names here if needed
+kosnames = utils.get_file_names(root, "KO") # Replace "KO" with your group name
+wtsnames = utils.get_file_names(root, "WT") # Replace "WT" with your group name
+```
+If you cahnge `KO` and `WT` to other names (e.g., `GroupA` and `GroupB`), make sure your filenames match this new naming scheme.
+
+### **3. Run the Main Script**
 Run the following command in your terminal:
 ```bash
 phyton src/__main__.py
 ```
+### **4. Output**
+The script will perform the following tasks:
+1. **Read** and **process** the USV files for both groups.
+2. **Generate summary data:**
+    - **USV length** (mean and SEM).
+    - **Calls per minute** (CPM).
+3. **Print the summaries** to the terminal for both groups.
+4. **Provide comparisons** (Group1 vs Group2) with statistical analysis.
+5. **Save results** as files in a folder called `Python_files`:
+    - **Excel files:** Summary data for each group and combined results.
+    - **Statistical Results:** A **text file** containing the statistical test results.
+    - **Bar graphs:** two **bar graph images** (one for **USV length** and one for **Calls per minute**).
+
+### **Notes**
+- The text files should have **two columns** (start time and end time of each USV call).
+- The third column will be ignored automatically.
+- The script assumes a **5-minute recording duration** to calculate "calls per minute (CPM)".
 
 
 ---
