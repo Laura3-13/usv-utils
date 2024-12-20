@@ -24,6 +24,7 @@ keywords:
   - Avisoft-SASLab Pro
   - Statistical analysis
 license: Apache-2.0
-commit: a51a1df35f4ec7bcb7d5099a52b03879283f7b11
+commit: cc7e565033f3c871e8edbd7ab2f94eb3d3c92f86
 version: 1.0.0
 date-released: '2024-12-20'
+doi: '10.5281/zenodo.14537933'  # If published on Zenodo or similar platforms
