@@ -1,8 +1,7 @@
 cff-version: 1.2.0
 title: Usv-utils
 message: >-
-  If you use this software, please cite it using the
-  metadata from this file.
+  If you use this software, please cite it using the metadata from this file.
 type: software
 authors:
   - given-names: Laura
@@ -10,6 +9,7 @@ authors:
     email: laura.marsalgarcia@mail.mcgill.ca
     affiliation: McGill University
     orcid: 'https://orcid.org/0000-0002-6337-1656'
+publisher: Laura Marsal-García
 repository-code: 'https://github.com/Laura3-13/usv-utils'
 abstract: >-
   A Phyton tool for processing and analyzing mouse ultrasonic vocalizations (USVs)
@@ -24,7 +24,7 @@ keywords:
   - Avisoft-SASLab Pro
   - Statistical analysis
 license: Apache-2.0
-commit: cc7e565033f3c871e8edbd7ab2f94eb3d3c92f86
+commit: 2ffc6b7489f83d334ba5c4894ce841069d0655dc
 version: 1.0.0
 date-released: '2024-12-20'
 doi: '10.5281/zenodo.14537933'  # If published on Zenodo or similar platforms
