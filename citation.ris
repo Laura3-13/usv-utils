@@ -1,0 +1,14 @@
+TY  - COMP
+TI  - Usv-utils
+AU  - Marsal-García, Laura
+PY  - 2024
+PB  - Laura Marsal-García
+AB  - A Python tool for processing and analyzing mouse ultrasonic vocalizations (USVs). This library processes USV data into meaningful statistics, such as USV length and calls per minute, and performs statistical comparisons between two experimental groups.
+KW  - Mouse ultrasonic vocalizations
+KW  - USV analysis
+KW  - Neuroscience
+KW  - Avisoft-SASLab Pro
+KW  - Python tools
+UR  - https://github.com/Laura3-13/usv-utils
+DO  - 10.5281/zenodo.14537933
+ER  -
