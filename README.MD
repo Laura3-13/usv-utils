@@ -163,9 +163,24 @@ usv-utils/
 │   └── utils.py                    # Utility functions to fetch file names
 │
 ├── requirements.txt                # Required libraries for the project
+├── citation.ris                    # Citation file for importing into reference managers
 ├── README.md                       # Project documentation and setup guide
 └── .gitignore                      # Files and directories to ignore in Git
 ```
+
+
+---
+
+
+## 🖋️ **Citation**
+
+If you use this repository in your research or projects, please cite it appropriately!
+
+On the right side of this GitHub page, you'll find a **Cite this repository** section where you can copy citations in:
+- **APA** format
+- **BibTeX** format (for LaTeX users)
+
+For other reference managers, such as **EndNote**, **Zotero**, or **Mendeley**, download the `citation.ris` file directly from the repository.
 
 
 ---
