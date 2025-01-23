@@ -1,13 +1,13 @@
 # USV-Utils: Mouse USV Analysis Library
 
-A Phyton tool for processing and analyzing mouse ultrasonic vocalizations (USVs) extracted using **Avisoft-SASLab Pro** software. This library automatically processes USV data into meaningful statistics, such as **USV length** and **calls per minute**, and performs **statistical comparisons** between two experimental groups.
+A Phyton tool for processing and analyzing mouse ultrasonic vocalizations (USVs) extracted using **Avisoft-SASLab Pro** software. This library automatically processes USV data into meaningful statistics, such as **USV duration** and **calls per minute**, and performs **statistical comparisons** between two experimental groups.
 
 
 ---
 
 
 ## 🎯 **Key Features**
-- 📃 **USV Data Classification**: Calculates USV length and calls per minute (CPM).
+- 📃 **USV Data Classification**: Calculates USV duration and calls per minute (CPM).
 - 📊 **Statistical Analysis**: Performs automated statistical tests between two groups.
 - 📂 **File Management**: Automatically reads USV text files from specified folders.
 - ⚙️ **Automation Ready**: Minimal setup - just provide the path and run the main script.
@@ -122,14 +122,14 @@ phyton src/__main__.py
 The script will perform the following tasks:
 1. **Read** and **process** the USV files for both groups.
 2. **Generate summary data:**
-    - **USV length** (mean and SEM).
+    - **USV duration** (mean and SEM).
     - **Calls per minute** (CPM).
 3. **Print the summaries** to the terminal for both groups.
 4. **Provide comparisons** (Group1 vs Group2) with statistical analysis.
 5. **Save results** as files in a folder called `Python_files`:
     - **Excel files:** Summary data for each group and combined results.
     - **Statistical Results:** A **text file** containing the statistical test results.
-    - **Bar graphs:** two **bar graph images** (one for **USV length** and one for **Calls per minute**).
+    - **Bar graphs:** two **bar graph images** (one for **USV duration** and one for **Calls per minute**).
 
 ### **Notes**
 - The text files should have **two columns** (start time and end time of each USV call).
@@ -188,7 +188,7 @@ For other reference managers, such as **EndNote**, **Zotero**, or **Mendeley**, 
 
 ## 🐭 **How It works**
 1. **Load USV Files:** Extract USV start and end times from Avisoft-SASLab Pro text files.
-2. **Process Data:** Calculate USV length and calls per minute (CPM).
+2. **Process Data:** Calculate USV duration and calls per minute (CPM).
 3. **Perform Statistical Analysis:**
     - **Compare two groups:** Automatically calculates mean, standard deviation, and performs significance tests.
 
