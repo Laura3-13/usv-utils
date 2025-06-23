@@ -1,6 +1,6 @@
 # USV-Utils: Mouse USV Analysis Library
 
-A Phyton tool for processing and analyzing mouse ultrasonic vocalizations (USVs) extracted using **Avisoft-SASLab Pro** software. This library automatically processes USV data into meaningful statistics, such as **USV duration** and **calls per minute**, and performs **statistical comparisons** between two experimental groups.
+A Python tool for processing and analyzing mouse ultrasonic vocalizations (USVs) extracted using **Avisoft-SASLab Pro** software. This library automatically processes USV data into meaningful statistics, such as **USV duration** and **calls per minute**, and performs **statistical comparisons** between two experimental groups.
 
 
 ---
