@@ -12,7 +12,7 @@ authors:
 publisher: Laura Marsal-García
 repository-code: 'https://github.com/Laura3-13/usv-utils'
 abstract: >-
-  A Phyton tool for processing and analyzing mouse ultrasonic vocalizations (USVs)
+  A Python tool for processing and analyzing mouse ultrasonic vocalizations (USVs)
   extracted using Avisoft-SASLab Pro software. This library automatically
   processes USV data into meaningful statistics, such as USV duration and calls per minute,
   and performs statistical comparisons between two experimental groups.
@@ -24,7 +24,6 @@ keywords:
   - Avisoft-SASLab Pro
   - Statistical analysis
 license: Apache-2.0
-commit: 2ffc6b7489f83d334ba5c4894ce841069d0655dc
-version: 1.0.0
-date-released: '2024-12-20'
-doi: '10.5281/zenodo.14537932'  # If published on Zenodo or similar platforms
+version: 1.2.0
+date-released: '2026-06-09'
+doi: '10.5281/zenodo.14537932'
