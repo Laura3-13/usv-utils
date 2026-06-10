@@ -37,7 +37,7 @@ conda activate usv-utils
 
 4. **Install Required Libraries**
 ``` bash
-pip install '-r' requirements.txt
+pip install -r requirements.txt
 ```
 
 ---
