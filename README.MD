@@ -135,6 +135,7 @@ The script will perform the following tasks:
 - The text files should have **two columns** (start time and end time of each USV call).
 - The third column will be ignored automatically.
 - The script assumes a **5-minute recording duration** to calculate "calls per minute (CPM)".
+- To analyze recordings of a different duration, modify the value of `RECORDING_DURATION_MINUTES` in the `CPM()` function of `data_workflow_vocalmat.py`.
 
 
 ---

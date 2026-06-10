@@ -49,7 +49,7 @@ class Summary():
 
     @staticmethod
     def CPM(g: list):
-        """generate the variable calls per minute (CPM), dividing the total amount of calls per the duration of the recording (5 min)
+        """generate the variable calls per minute (CPM), dividing the total amount of calls per the duration of the recording
 
         Args:
             g (list): a list of 'pd.DataFrame'
@@ -57,9 +57,10 @@ class Summary():
         Returns:
             float: a decimal number
         """
+        RECORDING_DURATION_MINUTES = 5.
         if len(g) == 0:
             return 0.0
-        return len(g)/5.
+        return len(g)/RECORDING_DURATION_MINUTES
     
     @staticmethod
     def filter_nan_and_calculate_sem(data):
