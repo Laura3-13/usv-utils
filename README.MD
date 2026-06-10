@@ -103,7 +103,7 @@ Ensure all **USV text files** are stored in a single folder.
 
 ### **2. Add Your File Path in `__main__.py`**
 Open the `__main__.py` file and change the variable `root` to point to your folder containing the USV files:
-```phyton
+```python
 # Get your USV files from your path of choice
 root = "INTRODUCE YOUR PATH HERE"
 
@@ -116,7 +116,7 @@ If you change `KO` and `WT` to other names (e.g., `GroupA` and `GroupB`), make s
 ### **3. Run the Main Script**
 Run the following command in your terminal:
 ```bash
-phyton src/__main__.py
+python src/__main__.py
 ```
 ### **4. Output**
 The script will perform the following tasks:
