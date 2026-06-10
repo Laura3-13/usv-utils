@@ -78,7 +78,7 @@ pip install -r requirements.txt
 
 ## 📦 **How to Use**
 ### **1. Organize Your Data Files**
-The script is design to compare **two groups**. By default, the groups are:
+The script is designed to compare **two groups**. By default, the groups are:
 - **WT** (Wild-type)
 - **KO** (Knockout)
 
@@ -97,7 +97,7 @@ WT1.txt, WT2.txt, WT3.txt, KO1.txt, KO2.txt, KO3.txt
 ```
 - For other groups, such as **GroupA** and **GroupB**:
 ```bash
-GroupA1.txt, GroupA2.txt, GroupA3.txt, GroupB1.txt, GroupB2.txt, GroupB3.txt, 
+GroupA1.txt, GroupA2.txt, GroupA3.txt, GroupB1.txt, GroupB2.txt, GroupB3.txt
 ```
 Ensure all **USV text files** are stored in a single folder.
 
@@ -111,7 +111,7 @@ root = "INTRODUCE YOUR PATH HERE"
 kosnames = utils.get_file_names(root, "KO") # Replace "KO" with your group name
 wtsnames = utils.get_file_names(root, "WT") # Replace "WT" with your group name
 ```
-If you cahnge `KO` and `WT` to other names (e.g., `GroupA` and `GroupB`), make sure your filenames match this new naming scheme.
+If you change `KO` and `WT` to other names (e.g., `GroupA` and `GroupB`), make sure your filenames match this new naming scheme.
 
 ### **3. Run the Main Script**
 Run the following command in your terminal:
@@ -159,7 +159,7 @@ usv-utils/
 │   ├── __init__.py                 # Marks this directory as a Python package
 │   ├── __main__.py                 # RUN THIS FILE
 │   ├── data_workflow.py            # Data processing and summary generation
-│   ├──statistical_analysis.py      # Statistical tests (t-test, Mann-Whitney, etc.)
+│   ├── statistical_analysis.py      # Statistical tests (t-test, Mann-Whitney, etc.)
 │   ├── plotting.py                 # Plotting functions for barplots
 │   └── utils.py                    # Utility functions to fetch file names
 │
@@ -187,7 +187,7 @@ For other reference managers, such as **EndNote**, **Zotero**, or **Mendeley**, 
 ---
 
 
-## 🐭 **How It works**
+## 🐭 **How It Works**
 1. **Load USV Files:** Extract USV start and end times from Avisoft-SASLab Pro text files.
 2. **Process Data:** Calculate USV duration and calls per minute (CPM).
 3. **Perform Statistical Analysis:**
